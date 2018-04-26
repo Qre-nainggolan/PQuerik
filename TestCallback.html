@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4-strict.dtd">
+<html>
+<head>
+	<title> Test Callback </title>
+	<script type="text/javascript">
+		var yaya = "";
+		function foo(callback) {
+			httpRequest = new XMLHttpRequest();
+			httpRequest.onreadystatechange = function () {
+				if (httpRequest.readyState === 4) { // request is done
+					if (httpRequest.status === 200) { // successfully
+						callback(httpRequest.responseText); // we're calling our method
+					}
+				}
+			};
+			httpRequest.open('GET', "request.aspx");
+			httpRequest.send();
+		}
+		foo(function (result) {
+			yaya = result;
+			return result;
+		});
+
+		alert("yaya" + yaya);
+		// 1. Call helloCatAsync passing a callback function,
+		//    which will be called receiving the result from the async operation
+		helloCatAsync(function(result) {
+			// 5. Received the result from the async function,
+			//    now do whatever you want with it:
+			alert(result);
+		});
+		
+		var outerScopeVar = "";
+
+		// 2. The "callback" parameter is a reference to the function which
+		//    was passed as argument from the helloCatAsync call
+		function helloCatAsync(callback) {
+			// 3. Start async operation:
+			setTimeout(function() {
+				// 4. Finished async operation,
+				//    call the callback passing the result as argument
+				outerScopeVar = "aa";
+				callback('Nya');
+			}, Math.random() * 2000);
+		}
+
+		alert(outerScopeVar + "g");		
+
+	</script>
+</head>
+<body>
+</body>
+</html>
