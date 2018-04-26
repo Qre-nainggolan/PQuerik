@@ -1,0 +1,77 @@
+.DropDownGroupBlock{
+	border:1px solid #4f5ff9;
+	float:left;
+	margin-left:4px;
+	left:4px;
+	padding-left:2px;
+	padding-right:2px;
+	margin-top:1px;
+}
+
+.DropDownGroupBlock:hover{
+	background:blue;
+	cursor:pointer;
+}
+
+.DropDown{
+	left:0;
+	margin-left:0;
+	top:0;
+	margin-top:0;
+	position:absolute;
+	color : #5766f8;
+	font-family:Arial;
+	font-size:14px;
+}
+
+.DropDownItem:hover{
+	background:#353637;
+	cursor:pointer;
+}
+.DropDownChild{
+	position:absolute;
+	border:1px solid #4f5ff9;
+	padding-left:2px;
+	padding-right:2px;			
+}
+
+.DropDownContainer{
+	padding-bottom:0;
+	position:relative;
+	min-height:100px;
+	margin:auto;
+	top:0;
+	margin-top:0;
+	width:500px;
+}
+
+.PQuerikGrid{
+	padding:1px 1px 1px 1px;
+	margin:1px 1px 1px 1px;
+}
+
+.GridItem, .GridGroupBlock{
+	border:1px solid #000000;
+	margin:1px 1px 1px 1px;
+	padding:1px 1px 1px 1px;
+}
+
+.GridContainer{
+	padding-bottom:0;
+	position:relative;
+	min-height:100px;
+	margin:auto;
+	top:0;
+	margin-top:0;
+	width:500px;
+}
+
+.GridGroupBlock{
+	border:1px solid #4f5ff9;
+	float:left;
+	margin-left:4px;
+	left:4px;
+	padding-left:2px;
+	padding-right:2px;
+	margin-top:1px;
+}
