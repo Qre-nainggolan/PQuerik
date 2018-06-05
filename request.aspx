@@ -2,8 +2,9 @@
 <%
 	Dim requestResponse = ""
 	Dim total = """total"":""2"""
-	Dim results = "{""Check1"":""Jakarta"",""Check2"":""Barat""}," & _
-				"{""Check1"":""Kapuk"",""Check2"":""Cengkareng""}"
+	Dim results = "{""erik"":""Jakarta"",""yeni"":""Sumut"",""erikyeni"":""AMIN1""}," & _
+				"{""erik"":""JakBar"",""yeni"":""Medan"",""erikyeni"":""AMIN2""}," & _
+				"{""erik"":""Programmer"",""yeni"":""Bidan"",""erikyeni"":""AMIN3""}"
 	requestResponse = "{" & total & ",""results"":[" & results & "]}"
 	Response.Write(requestResponse)
 %>

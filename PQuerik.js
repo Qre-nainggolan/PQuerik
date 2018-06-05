@@ -67,7 +67,7 @@ var PQuerik = {
 	data:{ // Start Building PQuerik "data" Object
 		Store:function(){ // Start Building PQuerik Store Object
 			// Get the last counter of built element by the application
-			this.PQuerikTagCounter = PQuerik.getBuiltElementCounter();
+			this.PQuerikTagCounter = PQuerik.getBuiltElementCounter(); 
 
 			this.params = PQuerik.parseArguments(arguments); // Get the parameter inside new PQuerik.data.Store({});
 
@@ -90,30 +90,51 @@ var PQuerik = {
 
 					// Start trying populating the object
 					// Start - While there is child item of object, keep creating them
+					// " -- We are calling the parent of store defined in PQuerik.form.Grid with this line -- "
+					//	this.objects[i].store = this.params[i].store;					
+					// 	" -- "
 					if(data.results){
+						var parentGrid;
 						for(var i = 0; i < PQuerik.elements.length; i++){
 							for(var j = 0;j < PQuerik.elements[i].length; j++){
 								if(PQuerik.elements[i][j].type == "Grid"){
 									if(PQuerik.elements[i][j].store){
 										if(PQuerik.elements[i][j].store.Element[0].PQuerikID == PQuerikID){
 											targetName = PQuerik.elements[i][j].target;
+											parentGrid = PQuerik.elements[i][j];
 										}
 									}
 								}
 							}
 						}
+
+						var bgColor = "";
+						var width = "";
+						var rowWidth = parseInt(parentGrid.style.width);
 						for(var j = 0; j < data.results.length; j++)
 						{
 							// This is callback function - remember callback has scope
 							var newObject = document.createElement("div");
-							var value = "<div style='width:410px'>";
-
-							for(var key in data.results[j]){
-								value += "<div style='width:200px;border:1px solid #000000;float:left'>" + data.results[j][key] + "</div>";
+							var value = "<div style='width:" + rowWidth + "px'>";
+							
+							for(var key in parentGrid.items){
+								width = parentGrid.items[key]["width"];
+								for(var key2 in parentGrid.items[key]){
+									if(key2 == "item"){
+										// Coloring the row
+										bgColor = ( j % 2 == 0) ? ";background-color:#d1feba" : ";background-color:#c3faa9";
+										value += "<div style='width:" + width + "px;border:1px solid #000000;float:left" + bgColor + "'>" + data.results[j][parentGrid.items[key]["item"]] + "</div>";
+									}
+								}
 							}
+							// for(var key in data.results[j]){
+								// bgColor = ( j % 2 == 0) ? ";background-color:#d1feba" : ";background-color:#c3faa9";
+								// value += "<div style='width:200px;border:1px solid #000000;float:left" + bgColor + "'>" + data.results[j][key] + "</div>";
+							// }
 							value += "</div>";
 							newObject.innerHTML = value ;
-							document.getElementById(targetName).appendChild(newObject);
+							// document.getElementById(targetName).appendChild(newObject); 
+							parentGrid.appendChild(newObject); 
 						}
 					}
 					// Stop - While there is child item of object, keep creating them
@@ -132,7 +153,8 @@ var PQuerik = {
 					this.objects[i].PQuerikID = "PQuerikStore" + this.PQuerikTagCounter;
 					this.objects[i].baseParams = (!this.params[i].baseParams) ? "nobaseparams" : this.params[i].baseParams;
 					this.PQuerikTagCounter++;
-
+					
+					// why i can't call this.params[i].proxy.load() =.= // Should i use prototype "jreng jreng"
 					if(this.params[i].proxy){
 						var proxy = new PQuerik.data.HttpProxy({url:this.params[i].proxy.params[0].url,method:this.params[i].proxy.params[0].method});
 						response = proxy.load();
@@ -175,7 +197,7 @@ var PQuerik = {
 			var url = (!this.params[0].url) ? "" : this.params[0].url;
 			var method = (!this.params[0].method) ? "" : this.params[0].method;
 			
-			this.load = function(){
+			this.load = function(){ // this is the triger and until now June 1st only callable from PQuerik.data.Store / or its parent 
 				var xhr = this.createXHR();
 				var response;
 				if(xhr){
@@ -186,9 +208,8 @@ var PQuerik = {
 					// xhr.setRequestHeader("Content-length", parameter.length);  ! Attempt to set a forbidden header was denied: Content-length
 					// xhr.setRequestHeader("Connection", "close"); ! Attempt to set a forbidden header was denied: Connection
 					xhr.send(parameter);
-
 				}
-				
+
 				return xhr;
 			}
 		}, // Stop Building PQuerik HttpProxy Object
@@ -493,7 +514,7 @@ var PQuerik = {
 
 				// Looping very first object, normally containing only single main object
 				for(var i=0; i < this.paramsLength; i++){
-					this.objects[i] = PQuerik.buildTag("div","PQuerikGrid","PQuerikGrid","PQuerikGrid");
+					this.objects[i] = PQuerik.buildTag("div","PQuerikGrid","PQuerikGrid","PQuerikGrid"); 
 					this.objects[i].style.width =  this.params[i].width + "px";
 					this.objects[i].style.height =  this.params[i].height + "px";
 					this.objects[i].name = this.params[i].name;
@@ -506,7 +527,8 @@ var PQuerik = {
 					}
  
 					// Start - While there is child item of object, keep creating them
-					if(this.params[i].items){
+					if(this.params[i].items){ 
+						this.objects[i].items = this.params[i].items;
 						childElement = this.buildChildElement(this.params[i]);
 						for(var j = 0; j < childElement.length; j++)
 						{
@@ -517,7 +539,6 @@ var PQuerik = {
 					// Stop - While there is child item of object, keep creating them
 
 					// Check if object inside variable has store , Be really careful with callback processing duration =.=
-					// alert("apa ya = " + this.params[i].store.objects[0]["data"]);
 					if(this.params[i].store){
 						this.objects[i].store = this.params[i].store;
 					}

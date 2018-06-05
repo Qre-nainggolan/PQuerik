@@ -59,11 +59,12 @@
 .GridContainer{
 	padding-bottom:0;
 	position:relative;
-	min-height:100px;
+	min-height:150px;
+	border:1px solid #000000;
 	margin:auto;
 	top:0;
 	margin-top:0;
-	width:500px;
+	width:640px;
 }
 
 .GridGroupBlock{

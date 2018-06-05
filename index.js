@@ -47,11 +47,12 @@ PQuerik.onReady(function(){ // Start PQuerik Scope
 		target:"GridContainer",
 		store:store,
 		items:[
-			{header:"Check1",item:"Check1",width:200},
-			{header:"Check2",item:"Check2",width:200}
+			{header:"Erik",item:"erik",width:200},
+			{header:"Anita",item:"yeni",width:200},
+			{header:"Erik & Yeni",item:"erikyeni",width:200}
 		],
-		height:40,
-		width:500,
+		height:200,
+		width:800,
 		name:"MainGrid"
 	});
 }); // End of PQuerik Scope
