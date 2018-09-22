@@ -113,5 +113,4 @@ PQuerik.onReady(function(){ // Start PQuerik Scope
 		width:500,
 		name:"MainGrid"
 	});
->>>>>>> edca36fe4e62d8e01a5a533188528fef4274d5bc
 }); // End of PQuerik Scope
